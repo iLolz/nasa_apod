@@ -1,4 +1,4 @@
-import '../domain/entities/pagination.dart';
+import '../../domain/entities/pagination.dart';
 
 class PaginationModel extends Pagination {
   const PaginationModel({

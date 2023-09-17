@@ -1,4 +1,4 @@
-import '../domain/entities/image_info.dart';
+import '../../domain/entities/image_info.dart';
 
 class ImageInfoModel {
   final DateTime date;
