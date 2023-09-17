@@ -1,10 +1,10 @@
-class ImageInfo {
+class ApodImage {
   final String imageUrl;
   final String title;
   final String description;
   final DateTime date;
 
-  ImageInfo({
+  ApodImage({
     required this.imageUrl,
     required this.title,
     required this.description,

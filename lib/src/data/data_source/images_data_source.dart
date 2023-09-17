@@ -5,5 +5,5 @@ import '../models/pagination_model.dart';
 abstract class ImageDataSource {
   const ImageDataSource();
 
-  Future<List<ImageInfoModel>> getImages(PaginationModel p);
+  Future<List<ApodImageModel>> getImages(PaginationModel p);
 }

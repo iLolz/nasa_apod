@@ -1,6 +1,6 @@
 import '../../domain/entities/image_info.dart';
 
-class ImageInfoModel {
+class ApodImageModel {
   final DateTime date;
   final String explanation;
   final String hdImageUrl;
@@ -8,7 +8,7 @@ class ImageInfoModel {
   final String mediaType;
   final String imageUrl;
 
-  const ImageInfoModel({
+  const ApodImageModel({
     required this.date,
     required this.explanation,
     required this.hdImageUrl,
@@ -17,8 +17,8 @@ class ImageInfoModel {
     required this.imageUrl,
   });
 
-  factory ImageInfoModel.fromMap(Map<String, dynamic> json) {
-    return ImageInfoModel(
+  factory ApodImageModel.fromMap(Map<String, dynamic> json) {
+    return ApodImageModel(
       date: DateTime.parse(json['date']),
       explanation: json['explanation'],
       hdImageUrl: json['hdurl'],
@@ -28,8 +28,8 @@ class ImageInfoModel {
     );
   }
 
-  ImageInfo toEntity() {
-    return ImageInfo(
+  ApodImage toEntity() {
+    return ApodImage(
       date: date,
       description: explanation,
       imageUrl: hdImageUrl,

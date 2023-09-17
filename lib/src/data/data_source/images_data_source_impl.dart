@@ -10,17 +10,17 @@ class ImagesDataSourceImpl extends ImageDataSource {
   const ImagesDataSourceImpl(this._client);
 
   @override
-  Future<List<ImageInfoModel>> getImages(PaginationModel p) async {
+  Future<List<ApodImageModel>> getImages(PaginationModel p) async {
     try {
       final response = await _client.get(
         '/planetary/apod',
         queryParameters: p.toMap(),
       );
 
-      final data = <ImageInfoModel>[];
+      final data = <ApodImageModel>[];
 
       for (var item in response.data) {
-        data.add(ImageInfoModel.fromMap(item));
+        data.add(ApodImageModel.fromMap(item));
       }
 
       return data;

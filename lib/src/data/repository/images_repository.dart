@@ -1,7 +1,9 @@
 import 'package:nasa_apod/src/domain/entities/pagination.dart';
 
-import '../models/image_info_model.dart';
+import '../../domain/entities/image_info.dart';
 
 abstract class ImagesRepository {
-  Future<List<ImageInfoModel>> getImages(Pagination pagination);
+  const ImagesRepository();
+
+  Future<List<ApodImage>> getImages(Pagination pagination);
 }
