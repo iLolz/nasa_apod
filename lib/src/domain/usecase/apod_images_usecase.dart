@@ -1,7 +1,7 @@
 import 'package:nasa_apod/src/core/utils/exceptions.dart';
 
 import '../../data/repository/images_repository.dart';
-import '../entities/image_info.dart';
+import '../entities/apod_image.dart';
 import '../entities/pagination.dart';
 
 class ApodImagesUsecase {

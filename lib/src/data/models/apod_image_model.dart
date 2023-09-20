@@ -1,4 +1,4 @@
-import '../../domain/entities/image_info.dart';
+import '../../domain/entities/apod_image.dart';
 
 class ApodImageModel {
   final DateTime date;

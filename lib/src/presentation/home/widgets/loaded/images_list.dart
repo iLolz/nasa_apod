@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nasa_apod/src/presentation/home/widgets/loaded/image_card.dart';
 
-import '../../../../domain/entities/image_info.dart';
+import '../../../../domain/entities/apod_image.dart';
 
 class ImagesList extends StatelessWidget {
   final List<ApodImage> images;

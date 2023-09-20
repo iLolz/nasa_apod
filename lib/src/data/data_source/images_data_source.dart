@@ -1,4 +1,4 @@
-import 'package:nasa_apod/src/data/models/image_info_model.dart';
+import 'package:nasa_apod/src/data/models/apod_image_model.dart';
 
 import '../models/pagination_model.dart';
 

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/image_info.dart';
+import '../../domain/entities/apod_image.dart';
 import '../../domain/entities/pagination.dart';
 
 extension When on HomeState {

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nasa_apod/src/core/utils/formatters.dart';
-import 'package:nasa_apod/src/domain/entities/image_info.dart';
+import 'package:nasa_apod/src/domain/entities/apod_image.dart';
 
 class DetailsPage extends StatelessWidget {
   final ApodImage image;

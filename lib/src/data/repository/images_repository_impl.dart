@@ -4,7 +4,7 @@ import 'package:nasa_apod/src/data/models/pagination_model.dart';
 import 'package:nasa_apod/src/data/repository/images_repository.dart';
 import 'package:nasa_apod/src/domain/entities/pagination.dart';
 
-import '../../domain/entities/image_info.dart';
+import '../../domain/entities/apod_image.dart';
 
 class ImagesRepositoryImpl extends ImagesRepository {
   final ImageDataSource _dataSource;

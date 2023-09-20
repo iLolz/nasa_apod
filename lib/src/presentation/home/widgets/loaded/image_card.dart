@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nasa_apod/src/core/utils/formatters.dart';
 import 'package:nasa_apod/src/presentation/details/details_page.dart';
 
-import '../../../../domain/entities/image_info.dart';
+import '../../../../domain/entities/apod_image.dart';
 
 class ImageCard extends StatelessWidget {
   const ImageCard({

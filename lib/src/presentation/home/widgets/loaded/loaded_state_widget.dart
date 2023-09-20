@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nasa_apod/src/presentation/home/widgets/loaded/load_more_error.dart';
 
-import '../../../../domain/entities/image_info.dart';
+import '../../../../domain/entities/apod_image.dart';
 import '../../../home_cubit.dart';
 import '../../home_state.dart';
 import 'images_list.dart';
