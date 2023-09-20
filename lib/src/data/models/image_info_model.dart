@@ -32,7 +32,7 @@ class ApodImageModel {
     return ApodImage(
       date: date,
       description: explanation,
-      imageUrl: hdImageUrl,
+      imageUrl: imageUrl,
       title: title,
     );
   }
