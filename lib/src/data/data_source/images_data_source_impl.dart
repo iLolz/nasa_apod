@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:nasa_apod/src/core/utils/exceptions.dart';
 import 'package:nasa_apod/src/data/data_source/images_data_source.dart';
 import 'package:nasa_apod/src/data/models/image_info_model.dart';
 
@@ -25,7 +26,8 @@ class ImagesDataSourceImpl extends ImageDataSource {
 
       return data;
     } catch (e) {
-      rethrow;
+      if (e is BaseException) rethrow;
+      throw DataSourceException(e.toString());
     }
   }
 }
