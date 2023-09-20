@@ -1,3 +1,4 @@
+import 'package:nasa_apod/src/core/utils/exceptions.dart';
 import 'package:nasa_apod/src/data/data_source/images_data_source.dart';
 import 'package:nasa_apod/src/data/models/pagination_model.dart';
 import 'package:nasa_apod/src/data/repository/images_repository.dart';
@@ -13,8 +14,9 @@ class ImagesRepositoryImpl extends ImagesRepository {
   @override
   Future<List<ApodImage>> getImages(Pagination pagination) async {
     try {
-      final response =
-          await _dataSource.getImages(pagination as PaginationModel);
+      final paginationModel = PaginationModel.fromPagination(pagination);
+
+      final response = await _dataSource.getImages(paginationModel);
 
       final data = <ApodImage>[];
 
@@ -24,7 +26,8 @@ class ImagesRepositoryImpl extends ImagesRepository {
 
       return data;
     } catch (e) {
-      rethrow;
+      if (e is BaseException) rethrow;
+      throw RepositoryException(e.toString());
     }
   }
 }
