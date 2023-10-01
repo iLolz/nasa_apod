@@ -28,6 +28,8 @@ If you are using the VSCode to code, you will need to create a `.vscode/launch.j
             "args": [
                 "--dart-define",
                 "apiKey=YOUR_API_KEY",
+                "--dart-define",
+                "baseUrl=https://api.nasa.gov/"
             ],
         }
     ]
