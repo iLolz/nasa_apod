@@ -34,37 +34,49 @@ class ImageCard extends StatelessWidget {
         margin: const EdgeInsets.all(8.0),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                image.title,
-                style: textTheme.titleMedium,
-              ),
-              Text(
-                Formatters.toDateString(image.date),
-                style: textTheme.labelSmall,
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(4.0),
                 child: Hero(
                   tag: image.title,
                   child: CachedNetworkImage(
+                    height: 90.0,
+                    width: 90.0,
                     imageUrl: image.imageUrl,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
               const SizedBox(
-                height: 8.0,
+                width: 8.0,
               ),
-              Text(
-                image.description,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: textTheme.bodySmall,
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      image.title,
+                      style: textTheme.titleMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      Formatters.toDateString(image.date),
+                      style: textTheme.labelSmall,
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(
+                      image.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.bodySmall,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

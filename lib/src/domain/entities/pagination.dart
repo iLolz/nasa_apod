@@ -20,7 +20,7 @@ class Pagination {
   Pagination next() {
     return Pagination(
       startDate: startDate.subtract(const Duration(days: 10)),
-      endDate: startDate,
+      endDate: startDate.subtract(Duration(days: 1)),
       thumbs: thumbs,
     );
   }

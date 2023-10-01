@@ -18,13 +18,18 @@ class ApodImageModel {
   });
 
   factory ApodImageModel.fromMap(Map<String, dynamic> json) {
+    String hdUrl() => json.containsKey('hdurl') ? json['hdurl'] : json['url'];
+
+    String url() =>
+        json['media_type'] == 'video' ? json['thumbnail_url'] : json['url'];
+
     return ApodImageModel(
       date: DateTime.parse(json['date']),
       explanation: json['explanation'],
-      hdImageUrl: json['hdurl'],
+      hdImageUrl: hdUrl(),
       title: json['title'],
       mediaType: json['media_type'],
-      imageUrl: json['url'],
+      imageUrl: url(),
     );
   }
 
@@ -34,6 +39,7 @@ class ApodImageModel {
       description: explanation,
       imageUrl: imageUrl,
       title: title,
+      mediaType: mediaType,
     );
   }
 }

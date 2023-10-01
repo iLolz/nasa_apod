@@ -23,7 +23,7 @@ class ImagesRepositoryImpl extends ImagesRepository {
         data.add(item.toEntity());
       }
 
-      return data;
+      return data.reversed.toList();
     } catch (e) {
       if (e is BaseException) rethrow;
       throw RepositoryException(e.toString());

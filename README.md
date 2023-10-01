@@ -31,8 +31,8 @@ If you are using the VSCode to code, you will need to create a `.vscode/launch.j
                 "--dart-define",
                 "baseUrl=https://api.nasa.gov/"
             ],
-        }
-    ]
+        },
+    ],
 }
 ```
 

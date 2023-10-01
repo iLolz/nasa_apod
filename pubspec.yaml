@@ -42,6 +42,7 @@ dependencies:
   equatable: ^2.0.5
   cached_network_image: ^3.2.3
   intl: ^0.18.1
+  youtube_player_flutter: ^8.1.2
 
 dev_dependencies:
   flutter_test:

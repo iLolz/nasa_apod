@@ -1,3 +1,30 @@
 {
-    
+    "configurations": [
+        {
+            "name": "Debug mode",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "flutterMode": "debug",
+            "args": [
+                "--dart-define",
+                "apiKey=KfjBd5xyKTF9hcIENGizgLHYWj0w8aBM7MgZyff4",
+                "--dart-define",
+                "baseUrl=https://api.nasa.gov"
+            ],
+        },
+        {
+            "name": "Profile mode",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "flutterMode": "profile",
+            "args": [
+                "--dart-define",
+                "apiKey=KfjBd5xyKTF9hcIENGizgLHYWj0w8aBM7MgZyff4",
+                "--dart-define",
+                "baseUrl=https://api.nasa.gov"
+            ],
+        }
+    ]
 }
