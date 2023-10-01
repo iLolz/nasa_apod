@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:nasa_apod/src/core/utils/formatters.dart';
-import 'package:nasa_apod/src/presentation/details/details_page.dart';
 
+import '../../../../core/utils/formatters.dart';
 import '../../../../domain/entities/apod_image.dart';
+import '../../../details/details_page.dart';
 
 class ImageCard extends StatelessWidget {
   const ImageCard({
-    super.key,
     required this.image,
+    super.key,
   });
 
   final ApodImage image;

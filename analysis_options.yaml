@@ -7,8 +7,9 @@
 
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
-include: package:flutter_lints/flutter.yaml
-
+analyzer:
+  exclude:
+      - lib/generated/**
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -20,9 +21,89 @@ linter:
   # or a specific dart file by using the `// ignore: name_of_lint` and
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
-  rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+  rules:
+    - avoid_print
+    - prefer_single_quotes # Uncomment to enable the `prefer_single_quotes` rule
+    - always_declare_return_types
+    - collection_methods_unrelated_type
+    - invalid_case_patterns
+    - avoid_dynamic_calls
+    - avoid_empty_else
+    - avoid_relative_lib_imports
+    - avoid_types_as_parameter_names
+    - cancel_subscriptions
+    - literal_only_boolean_expressions
+    - no_self_assignments
+    - prefer_relative_imports
+    - prefer_void_to_null
+    - unnecessary_statements
+    - always_put_required_named_parameters_first
+    - avoid_field_initializers_in_const_classes
+    - avoid_final_parameters
+    - avoid_function_literals_in_foreach_calls
+    - avoid_init_to_null
+    - avoid_multiple_declarations_per_line
+    - avoid_positional_boolean_parameters
+    - avoid_returning_null_for_void
+    - avoid_unnecessary_containers
+    - avoid_void_async
+    - camel_case_extensions
+    - camel_case_types
+    - combinators_ordering
+    - constant_identifier_names
+    - directives_ordering
+    - empty_catches
+    - empty_constructor_bodies
+    - exhaustive_cases
+    - file_names
+    - flutter_style_todos
+    - implicit_call_tearoffs
+    - join_return_with_assignment
+    - library_names
+    - library_prefixes
+    - lines_longer_than_80_chars
+    - matching_super_parameters
+    - missing_whitespace_between_adjacent_strings
+    - no_leading_underscores_for_local_identifiers
+    - no_leading_underscores_for_library_prefixes
+    - no_literal_bool_comparisons
+    - omit_local_variable_types
+    - prefer_asserts_in_initializer_lists
+    - prefer_asserts_with_message
+    - prefer_collection_literals
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
+    - prefer_final_fields
+    - prefer_final_in_for_each
+    - prefer_final_locals
+    - prefer_for_elements_to_map_fromIterable
+    - prefer_function_declarations_over_variables
+    - prefer_generic_function_type_aliases
+    - prefer_if_elements_to_conditional_expressions
+    - prefer_if_null_operators
+    - prefer_initializing_formals
+    - prefer_inlined_adds
+    - prefer_interpolation_to_compose_strings
+    - prefer_is_empty
+    - prefer_is_not_empty
+    - prefer_is_not_operator
+    - prefer_null_aware_method_calls
+    - prefer_null_aware_operators
+    - prefer_spread_collections
+    - recursive_getters
+    - require_trailing_commas
+    - prefer_typing_uninitialized_variables
+    - sized_box_for_whitespace
+    - sort_child_properties_last
+    - unnecessary_brace_in_string_interps
+    - unnecessary_const
+    - unnecessary_lambdas
+    - unnecessary_late
+    - unnecessary_null_checks
+    - unnecessary_parenthesis
+    - unnecessary_string_interpolations
+    - use_colored_box
+    - use_is_even_rather_than_modulo
+    - use_named_constants
+    - use_super_parameters

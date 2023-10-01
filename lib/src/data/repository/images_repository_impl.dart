@@ -1,10 +1,9 @@
-import 'package:nasa_apod/src/core/utils/exceptions.dart';
-import 'package:nasa_apod/src/data/data_source/images_data_source.dart';
-import 'package:nasa_apod/src/data/models/pagination_model.dart';
-import 'package:nasa_apod/src/data/repository/images_repository.dart';
-import 'package:nasa_apod/src/domain/entities/pagination.dart';
-
+import '../../core/utils/exceptions.dart';
 import '../../domain/entities/apod_image.dart';
+import '../../domain/entities/pagination.dart';
+import '../data_source/images_data_source.dart';
+import '../models/pagination_model.dart';
+import 'images_repository.dart';
 
 class ImagesRepositoryImpl extends ImagesRepository {
   final ImageDataSource _dataSource;
@@ -20,7 +19,7 @@ class ImagesRepositoryImpl extends ImagesRepository {
 
       final data = <ApodImage>[];
 
-      for (var item in response) {
+      for (final item in response) {
         data.add(item.toEntity());
       }
 

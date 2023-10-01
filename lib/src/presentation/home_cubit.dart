@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:nasa_apod/src/domain/entities/pagination.dart';
-import 'package:nasa_apod/src/domain/usecase/apod_images_usecase.dart';
-import 'package:nasa_apod/src/presentation/home/home_state.dart';
+
+import '../domain/entities/pagination.dart';
+import '../domain/usecase/apod_images_usecase.dart';
+import 'home/home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final ApodImagesUsecase usecase;

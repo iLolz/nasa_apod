@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:nasa_apod/src/core/utils/exceptions.dart';
-import 'package:nasa_apod/src/data/data_source/images_data_source.dart';
-import 'package:nasa_apod/src/data/models/apod_image_model.dart';
 
+import '../../core/utils/exceptions.dart';
+import '../models/apod_image_model.dart';
 import '../models/pagination_model.dart';
+import 'images_data_source.dart';
 
 class ImagesDataSourceImpl extends ImageDataSource {
   final Dio _client;
@@ -20,7 +20,7 @@ class ImagesDataSourceImpl extends ImageDataSource {
 
       final data = <ApodImageModel>[];
 
-      for (var item in response.data) {
+      for (final item in response.data) {
         data.add(ApodImageModel.fromMap(item));
       }
 

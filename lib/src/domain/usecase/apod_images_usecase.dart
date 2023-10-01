@@ -1,5 +1,4 @@
-import 'package:nasa_apod/src/core/utils/exceptions.dart';
-
+import '../../core/utils/exceptions.dart';
 import '../../data/repository/images_repository.dart';
 import '../entities/apod_image.dart';
 import '../entities/pagination.dart';
