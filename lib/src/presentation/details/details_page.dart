@@ -23,7 +23,8 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.image.imageUrl) ?? '',
+      initialVideoId:
+          YoutubePlayer.convertUrlToId(widget.image.hdImageUrl) ?? '',
       flags: const YoutubePlayerFlags(
         autoPlay: false,
         mute: false,

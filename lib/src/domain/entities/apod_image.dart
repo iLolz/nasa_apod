@@ -1,5 +1,6 @@
 class ApodImage {
   final String imageUrl;
+  final String hdImageUrl;
   final String title;
   final String description;
   final DateTime date;
@@ -11,5 +12,6 @@ class ApodImage {
     required this.description,
     required this.date,
     required this.mediaType,
+    required this.hdImageUrl,
   });
 }
