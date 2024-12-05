@@ -12,7 +12,7 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> getImages() async {
     try {
       emit(HomeStateLoading(state.pagination));
-      final response = await usecase.call(state.pagination);
+      final response = await usecase.call(null);
       emit(HomeStateLoaded(state.pagination.next(), response));
     } catch (e) {
       emit(HomeStateError(state.pagination));
@@ -25,10 +25,14 @@ class HomeCubit extends Cubit<HomeState> {
     final initialState = state as HomeStateLoaded;
     try {
       emit(HomeStateLoadingMore(initialState.pagination, initialState.images));
-      final response = await usecase.call(initialState.pagination.next());
+
+      final nextPage = initialState.pagination.next();
+
+      final response = await usecase.call(initialState.images);
+
       emit(
         HomeStateLoaded(
-          initialState.pagination.next(),
+          nextPage,
           [...initialState.images, ...response],
         ),
       );

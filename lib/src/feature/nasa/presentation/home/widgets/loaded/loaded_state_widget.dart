@@ -66,6 +66,19 @@ class _LoadedStateWidgetState extends State<LoadedStateWidget> {
                 : const SizedBox.shrink(),
           ),
         ),
+        SliverToBoxAdapter(
+          child: BlocSelector<HomeCubit, HomeState, bool>(
+            selector: (state) => state is HomeStateAllLoaded,
+            builder: (context, state) => state
+                ? const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text('All images loaded'),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ),
         const SliverSafeArea(
           sliver: SliverToBoxAdapter(
             child: SizedBox(

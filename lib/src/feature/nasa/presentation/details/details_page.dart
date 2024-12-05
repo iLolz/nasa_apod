@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../core/utils/formatters.dart';
+import '../../../../core/utils/formatters.dart';
 import '../../domain/entities/apod_image.dart';
 
 class DetailsPage extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class DioService {
-  Dio setup() {
+  static Dio setup() {
     const baseUrl = String.fromEnvironment('baseUrl');
     const apiKey = String.fromEnvironment('apiKey');
 

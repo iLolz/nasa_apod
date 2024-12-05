@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/formatters.dart';
+import '../../../../../../core/utils/formatters.dart';
 import '../../../../domain/entities/apod_image.dart';
 import '../../../details/details_page.dart';
 

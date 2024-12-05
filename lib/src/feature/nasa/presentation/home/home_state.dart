@@ -73,6 +73,13 @@ class HomeStateLoadingMoreError extends HomeStateLoaded {
   );
 }
 
+class HomeStateAllLoaded extends HomeStateLoaded {
+  const HomeStateAllLoaded(
+    super.pagination,
+    super.images,
+  );
+}
+
 class HomeStateError extends HomeState {
   const HomeStateError(super.pagination);
 

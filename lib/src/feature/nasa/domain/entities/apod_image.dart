@@ -6,7 +6,7 @@ class ApodImage {
   final DateTime date;
   final String mediaType;
 
-  ApodImage({
+  const ApodImage({
     required this.imageUrl,
     required this.title,
     required this.description,

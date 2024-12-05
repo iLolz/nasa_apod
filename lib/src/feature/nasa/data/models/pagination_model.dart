@@ -1,4 +1,5 @@
-import '../../core/utils/formatters.dart';
+import '../../../../core/utils/formatters.dart';
+
 import '../../domain/entities/pagination.dart';
 
 class PaginationModel extends Pagination {

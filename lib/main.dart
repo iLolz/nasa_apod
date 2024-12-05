@@ -1,13 +1,28 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-import 'src/presentation/home/home_page.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+
+import 'src/core/services/error_service.dart';
+import 'src/feature/nasa/presentation/home/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runZonedGuarded(
+    () => MyApp,
+    (error, stackTrace) {
+      GetIt.instance.get<ErrorService>().recordError(
+            error,
+            stackTrace: stackTrace,
+            reason: 'main.dart',
+          );
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +33,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: HomePage(),
+      navigatorKey: _navigatorKey,
     );
   }
 }
