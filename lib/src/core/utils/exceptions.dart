@@ -23,3 +23,7 @@ class DataSourceException extends BaseException {
 class RepositoryException extends BaseException {
   RepositoryException(super.message);
 }
+
+class SubmitException extends BaseException {
+  SubmitException(super.message);
+}
