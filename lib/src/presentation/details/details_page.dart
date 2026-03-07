@@ -56,20 +56,15 @@ class _DetailsPageState extends State<DetailsPage> {
                 imageUrl: widget.image.imageUrl,
               ),
             ),
-          const SizedBox(
-            height: 16.0,
-          ),
+          const SizedBox(height: 16),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Text(
               'Photo shooted on: ${Formatters.toDateString(widget.image.date)}',
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8.0,
-              vertical: 16.0,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: Text(
               widget.image.description,
               style: Theme.of(context).textTheme.labelMedium,

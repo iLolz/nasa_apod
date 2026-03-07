@@ -31,9 +31,9 @@ class ImageCard extends StatelessWidget {
     return InkWell(
       onTap: () => _navigateToDetails(context),
       child: Card(
-        margin: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(8),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -49,9 +49,7 @@ class ImageCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 8.0,
-              ),
+              const SizedBox.square(dimension: 8),
               Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,9 +64,7 @@ class ImageCard extends StatelessWidget {
                       Formatters.toDateString(image.date),
                       style: textTheme.labelSmall,
                     ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
+                    const SizedBox(height: 8),
                     Text(
                       image.description,
                       maxLines: 2,

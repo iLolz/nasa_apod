@@ -16,11 +16,11 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeStateLoaded(state.pagination.next(), response));
     } catch (e) {
       emit(HomeStateError(state.pagination));
-      throw e;
+      rethrow;
     }
   }
 
-  Future<void> loadMoreSales() async {
+  Future<void> loadMoreImages() async {
     if (state is HomeStateLoadingMore) return;
     final initialState = state as HomeStateLoaded;
     try {

@@ -16,7 +16,7 @@ class FailedToLoadMore extends StatelessWidget {
         ElevatedButton(
           child: const Text('Tentar novamente'),
           onPressed: () {
-            context.read<HomeCubit>().loadMoreSales();
+            context.read<HomeCubit>().loadMoreImages();
           },
         ),
       ],

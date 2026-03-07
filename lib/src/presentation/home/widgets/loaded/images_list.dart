@@ -17,9 +17,7 @@ class ImagesList extends StatelessWidget {
       children: [
         for (final image in images) ...[
           ImageCard(image: image),
-          const SizedBox(
-            height: 8.0,
-          ),
+          const SizedBox(height: 8),
         ],
       ],
     );

@@ -24,7 +24,7 @@ class _LoadedStateWidgetState extends State<LoadedStateWidget> {
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent - 200) {
-        context.read<HomeCubit>().loadMoreSales();
+        context.read<HomeCubit>().loadMoreImages();
       }
     });
     super.initState();
@@ -68,9 +68,7 @@ class _LoadedStateWidgetState extends State<LoadedStateWidget> {
         ),
         const SliverSafeArea(
           sliver: SliverToBoxAdapter(
-            child: SizedBox(
-              height: 16.0,
-            ),
+            child: SizedBox(height: 16),
           ),
         ),
       ],
