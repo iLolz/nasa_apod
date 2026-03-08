@@ -21,18 +21,27 @@ void main() {
       final stateExpectation = expectLater(
         cubit.stream,
         emitsInOrder([
-          isA<HomeStateLoading>(),
-          isA<HomeStateLoaded>(),
+          isA<HomeState>().having(
+            (state) => state.status,
+            'status',
+            HomeStatus.initialLoading,
+          ),
+          isA<HomeState>().having(
+            (state) => state.status,
+            'status',
+            HomeStatus.loaded,
+          ),
         ]),
       );
 
       await cubit.getImages();
       await stateExpectation;
 
-      final loadedState = cubit.state as HomeStateLoaded;
+      final loadedState = cubit.state;
 
       expect(usecase.receivedPaginations, hasLength(1));
       expect(loadedState.images.single.title, 'Galaxy');
+      expect(loadedState.status, HomeStatus.loaded);
       expect(
         loadedState.pagination.startDate,
         usecase.receivedPaginations.single.next().startDate,
@@ -49,18 +58,25 @@ void main() {
       final stateExpectation = expectLater(
         cubit.stream,
         emitsInOrder([
-          isA<HomeStateLoading>(),
-          isA<HomeStateError>(),
+          isA<HomeState>().having(
+            (state) => state.status,
+            'status',
+            HomeStatus.initialLoading,
+          ),
+          isA<HomeState>().having(
+            (state) => state.status,
+            'status',
+            HomeStatus.initialError,
+          ),
         ]),
       );
 
-      await expectLater(
-        cubit.getImages(),
-        throwsA(isA<UsecaseException>()),
-      );
+      await cubit.getImages();
       await stateExpectation;
 
-      expect(cubit.state, isA<HomeStateError>());
+      expect(cubit.state.status, HomeStatus.initialError);
+      expect(cubit.state.error?.type, HomeErrorType.parsing);
+      expect(cubit.state.error?.message, 'broken');
 
       await cubit.close();
     });
@@ -78,18 +94,27 @@ void main() {
       final stateExpectation = expectLater(
         cubit.stream,
         emitsInOrder([
-          isA<HomeStateLoadingMore>(),
-          isA<HomeStateLoaded>(),
+          isA<HomeState>().having(
+            (state) => state.status,
+            'status',
+            HomeStatus.loadingMore,
+          ),
+          isA<HomeState>().having(
+            (state) => state.status,
+            'status',
+            HomeStatus.loaded,
+          ),
         ]),
       );
       await cubit.loadMoreImages();
       await stateExpectation;
 
-      final loadedState = cubit.state as HomeStateLoaded;
+      final loadedState = cubit.state;
 
       expect(loadedState.images, hasLength(2));
       expect(loadedState.images.first.title, 'First page');
       expect(loadedState.images.last.title, 'Second page');
+      expect(loadedState.status, HomeStatus.loaded);
       expect(usecase.receivedPaginations, hasLength(2));
       expect(
         loadedState.pagination.startDate,
@@ -114,19 +139,27 @@ void main() {
       final stateExpectation = expectLater(
         cubit.stream,
         emitsInOrder([
-          isA<HomeStateLoadingMore>(),
-          isA<HomeStateLoadingMoreError>(),
+          isA<HomeState>().having(
+            (state) => state.status,
+            'status',
+            HomeStatus.loadingMore,
+          ),
+          isA<HomeState>().having(
+            (state) => state.status,
+            'status',
+            HomeStatus.loadMoreError,
+          ),
         ]),
       );
-      await expectLater(
-        cubit.loadMoreImages(),
-        throwsA(isA<UsecaseException>()),
-      );
+      await cubit.loadMoreImages();
       await stateExpectation;
 
-      final errorState = cubit.state as HomeStateLoadingMoreError;
+      final errorState = cubit.state;
 
       expect(errorState.images.single.title, 'First page');
+      expect(errorState.status, HomeStatus.loadMoreError);
+      expect(errorState.error?.type, HomeErrorType.parsing);
+      expect(errorState.error?.message, 'broken');
 
       await cubit.close();
     });
@@ -162,11 +195,12 @@ class _FakeApodImagesUsecase implements ApodImagesUsecase {
 
 ApodImage _image({required String title}) {
   return ApodImage(
-    imageUrl: 'https://example.com/image.jpg',
-    hdImageUrl: 'https://example.com/hd.jpg',
+    previewUrl: 'https://example.com/image.jpg',
+    contentUrl: 'https://example.com/hd.jpg',
     title: title,
     description: 'Description',
     date: DateTime(2024, 1, 20),
-    mediaType: 'image',
+    displayDate: '20/01/2024',
+    mediaType: ApodMediaType.image,
   );
 }

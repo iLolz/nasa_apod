@@ -56,11 +56,12 @@ Pagination testPagination() {
 
 ApodImage testImage({required String title}) {
   return ApodImage(
-    imageUrl: 'https://example.com/image.jpg',
-    hdImageUrl: 'https://example.com/hd.jpg',
+    previewUrl: 'https://example.com/image.jpg',
+    contentUrl: 'https://example.com/hd.jpg',
     title: title,
     description: 'Description',
     date: DateTime(2024, 1, 20),
-    mediaType: 'image',
+    displayDate: '20/01/2024',
+    mediaType: ApodMediaType.image,
   );
 }

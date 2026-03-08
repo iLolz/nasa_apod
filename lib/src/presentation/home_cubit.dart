@@ -1,40 +1,100 @@
 import 'package:bloc/bloc.dart';
 
-import '../domain/entities/pagination.dart';
+import '../core/utils/exceptions.dart';
 import '../domain/usecase/apod_images_usecase.dart';
 import 'home/home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final ApodImagesUsecase usecase;
 
-  HomeCubit(this.usecase) : super(HomeStateLoading(Pagination.empty()));
+  HomeCubit(this.usecase) : super(HomeState.initial());
 
   Future<void> getImages() async {
+    final pagination = state.pagination;
+
     try {
-      emit(HomeStateLoading(state.pagination));
-      final response = await usecase.call(state.pagination);
-      emit(HomeStateLoaded(state.pagination.next(), response));
+      emit(
+        state.copyWith(
+          status: HomeStatus.initialLoading,
+          error: null,
+        ),
+      );
+      final response = await usecase.call(pagination);
+      emit(
+        state.copyWith(
+          status: HomeStatus.loaded,
+          pagination: pagination.next(),
+          images: response,
+          error: null,
+        ),
+      );
     } catch (e) {
-      emit(HomeStateError(state.pagination));
-      rethrow;
+      emit(
+        state.copyWith(
+          status: HomeStatus.initialError,
+          pagination: pagination,
+          error: _mapError(e),
+        ),
+      );
     }
   }
 
   Future<void> loadMoreImages() async {
-    if (state is HomeStateLoadingMore) return;
-    final initialState = state as HomeStateLoaded;
+    if (!state.canLoadMore || state.isLoadingMore) return;
+
+    final pagination = state.pagination;
+    final images = state.images;
+
     try {
-      emit(HomeStateLoadingMore(initialState.pagination, initialState.images));
-      final response = await usecase.call(initialState.pagination.next());
       emit(
-        HomeStateLoaded(
-          initialState.pagination.next(),
-          [...initialState.images, ...response],
+        state.copyWith(
+          status: HomeStatus.loadingMore,
+          error: null,
+        ),
+      );
+      final response = await usecase.call(pagination.next());
+      emit(
+        state.copyWith(
+          status: HomeStatus.loaded,
+          pagination: pagination.next(),
+          images: [...images, ...response],
+          error: null,
         ),
       );
     } catch (e) {
-      emit(HomeStateLoadingMoreError(state.pagination, initialState.images));
-      rethrow;
+      emit(
+        state.copyWith(
+          status: HomeStatus.loadMoreError,
+          pagination: pagination,
+          images: images,
+          error: _mapError(e),
+        ),
+      );
     }
+  }
+
+  HomeError _mapError(Object error) {
+    if (error is NetworkException) {
+      return HomeError(
+        type: HomeErrorType.network,
+        message: error.message,
+      );
+    }
+
+    if (error is DataSourceException ||
+        error is RepositoryException ||
+        error is UsecaseException) {
+      final baseError = error as BaseException;
+
+      return HomeError(
+        type: HomeErrorType.parsing,
+        message: baseError.message,
+      );
+    }
+
+    return HomeError(
+      type: HomeErrorType.unknown,
+      message: error.toString(),
+    );
   }
 }

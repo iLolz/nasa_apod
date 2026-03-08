@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:isolate';
 
 import 'package:dio/dio.dart';
 
@@ -20,33 +21,80 @@ class ImagesDataSourceImpl extends ImageDataSource {
         queryParameters: p.toMap(),
       );
 
-      final data = <ApodImageModel>[];
+      final payload = (response.data as List<dynamic>)
+          .map(
+            (item) => Map<String, dynamic>.from(item as Map),
+          )
+          .toList(growable: false);
 
-      for (final item in response.data) {
-        try {
-          data.add(ApodImageModel.fromMap(item));
-        } catch (e) {
-          if ((item as Map<String, dynamic>).containsKey('date')) {
-            log(
-              'Image with date ${item['date']} is not available',
-              name: 'ImagesDataSourceImpl | ApodImageModel.fromMap',
-              error: e,
-            );
-          } else {
-            log(
-              'Error while parsing image',
-              name: 'ImagesDataSourceImpl | ApodImageModel.fromMap',
-              error: e,
-            );
-          }
+      final result = await Isolate.run(
+        () => _parseApodImages(payload),
+      );
+
+      for (final skippedItem in result.skippedItems) {
+        if (skippedItem.date != null) {
+          log(
+            'Image with date ${skippedItem.date} is not available',
+            name: 'ImagesDataSourceImpl | ApodImageModel.fromMap',
+            error: skippedItem.error,
+          );
+        } else {
+          log(
+            'Error while parsing image',
+            name: 'ImagesDataSourceImpl | ApodImageModel.fromMap',
+            error: skippedItem.error,
+          );
         }
       }
 
-      return data;
+      return result.data;
     } catch (e, s) {
       log(s.toString(), error: e, stackTrace: s);
       if (e is BaseException) rethrow;
       throw DataSourceException(e.toString());
     }
   }
+}
+
+_ParseResult _parseApodImages(List<Map<String, dynamic>> payload) {
+  final data = <ApodImageModel>[];
+  final skippedItems = <_SkippedItem>[];
+
+  for (final item in payload) {
+    try {
+      data.add(ApodImageModel.fromMap(item));
+    } catch (e) {
+      skippedItems.add(
+        _SkippedItem(
+          date: item['date']?.toString(),
+          error: e.toString(),
+        ),
+      );
+    }
+  }
+
+  return _ParseResult(
+    data: data,
+    skippedItems: skippedItems,
+  );
+}
+
+class _ParseResult {
+  const _ParseResult({
+    required this.data,
+    required this.skippedItems,
+  });
+
+  final List<ApodImageModel> data;
+  final List<_SkippedItem> skippedItems;
+}
+
+class _SkippedItem {
+  const _SkippedItem({
+    required this.date,
+    required this.error,
+  });
+
+  final String? date;
+  final String error;
 }

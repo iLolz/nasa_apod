@@ -1,3 +1,4 @@
+import '../../core/utils/formatters.dart';
 import '../../domain/entities/apod_image.dart';
 
 class ApodImageModel {
@@ -18,26 +19,42 @@ class ApodImageModel {
   });
 
   factory ApodImageModel.fromMap(Map<String, dynamic> json) {
+    String stringValue(String key) => (json[key] as String?)?.trim() ?? '';
+
     String hdUrl() {
       if (json['media_type'] == 'video') {
-        return json['url'];
+        return stringValue('url');
       }
 
-      return json.containsKey('hdurl') ? json['hdurl'] : json['url'];
+      final hdUrl = stringValue('hdurl');
+
+      if (hdUrl.isNotEmpty) {
+        return hdUrl;
+      }
+
+      return stringValue('url');
     }
 
     String url() {
-      return json['media_type'] == 'video'
-          ? json['thumbnail_url']
-          : json['url'];
+      if (json['media_type'] == 'video') {
+        final thumbnailUrl = stringValue('thumbnail_url');
+
+        if (thumbnailUrl.isNotEmpty) {
+          return thumbnailUrl;
+        }
+
+        return '';
+      }
+
+      return stringValue('url');
     }
 
     return ApodImageModel(
       date: DateTime.parse(json['date']),
-      explanation: json['explanation'],
+      explanation: stringValue('explanation'),
       hdImageUrl: hdUrl(),
-      title: json['title'],
-      mediaType: json['media_type'],
+      title: stringValue('title'),
+      mediaType: stringValue('media_type'),
       imageUrl: url(),
     );
   }
@@ -45,11 +62,27 @@ class ApodImageModel {
   ApodImage toEntity() {
     return ApodImage(
       date: date,
+      displayDate: Formatters.toDateString(date),
       description: explanation,
-      imageUrl: imageUrl,
+      previewUrl: imageUrl,
       title: title,
-      mediaType: mediaType,
-      hdImageUrl: hdImageUrl,
+      mediaType: switch (mediaType) {
+        'image' => ApodMediaType.image,
+        'video' => ApodMediaType.video,
+        _ => ApodMediaType.unknown,
+      },
+      contentUrl: hdImageUrl,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'date': date.toIso8601String().split('T').first,
+      'explanation': explanation,
+      'hdurl': hdImageUrl,
+      'title': title,
+      'media_type': mediaType,
+      'url': imageUrl,
+    };
   }
 }

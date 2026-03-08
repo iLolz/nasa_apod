@@ -1,81 +1,91 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 import '../../domain/entities/apod_image.dart';
 import '../../domain/entities/pagination.dart';
 
-extension When on HomeState {
-  Widget whenBuild({
-    required Widget loading,
-    required Widget loaded,
-    required Widget error,
-  }) {
-    if (this is HomeStateLoading) {
-      return loading;
-    } else if (this is HomeStateLoaded) {
-      return loaded;
-    } else if (this is HomeStateError) {
-      return error;
-    } else {
-      throw Exception('Unknown state');
-    }
-  }
+enum HomeStatus {
+  initial,
+  initialLoading,
+  loaded,
+  loadingMore,
+  initialError,
+  loadMoreError,
 }
 
-abstract class HomeState extends Equatable {
-  final Pagination pagination;
+enum HomeErrorType {
+  network,
+  parsing,
+  unknown,
+}
 
-  const HomeState(this.pagination);
+class HomeError extends Equatable {
+  final HomeErrorType type;
+  final String message;
+
+  const HomeError({
+    required this.type,
+    required this.message,
+  });
 
   @override
-  List<Object?> get props => [pagination];
+  List<Object?> get props => [type, message];
 }
 
-class HomeStateLoading extends HomeState {
-  const HomeStateLoading(super.pagination);
-}
+class HomeState extends Equatable {
+  static const _unset = Object();
 
-class HomeStateLoaded extends HomeState {
+  final HomeStatus status;
+  final Pagination pagination;
   final List<ApodImage> images;
+  final HomeError? error;
 
-  const HomeStateLoaded(
-    super.pagination,
-    this.images,
-  );
+  const HomeState({
+    required this.status,
+    required this.pagination,
+    this.images = const [],
+    this.error,
+  });
 
-  HomeStateLoaded add(
-    List<ApodImage> newImages,
-  ) {
-    return HomeStateLoaded(
-      pagination.next(),
-      [...images, ...newImages],
+  factory HomeState.initial() {
+    return HomeState(
+      status: HomeStatus.initial,
+      pagination: Pagination.empty(),
+    );
+  }
+
+  bool get isInitialLoading =>
+      status == HomeStatus.initial || status == HomeStatus.initialLoading;
+
+  bool get isLoaded => status == HomeStatus.loaded;
+
+  bool get hasInitialError => status == HomeStatus.initialError;
+
+  bool get isLoadingMore => status == HomeStatus.loadingMore;
+
+  bool get hasLoadMoreError => status == HomeStatus.loadMoreError;
+
+  bool get showsLoadedContent =>
+      status == HomeStatus.loaded ||
+      status == HomeStatus.loadingMore ||
+      status == HomeStatus.loadMoreError;
+
+  bool get canLoadMore =>
+      status == HomeStatus.loaded || status == HomeStatus.loadMoreError;
+
+  HomeState copyWith({
+    HomeStatus? status,
+    Pagination? pagination,
+    List<ApodImage>? images,
+    Object? error = _unset,
+  }) {
+    return HomeState(
+      status: status ?? this.status,
+      pagination: pagination ?? this.pagination,
+      images: images ?? this.images,
+      error: identical(error, _unset) ? this.error : error as HomeError?,
     );
   }
 
   @override
-  List<Object?> get props => [
-        ...super.props,
-        images,
-      ];
-}
-
-class HomeStateLoadingMore extends HomeStateLoaded {
-  const HomeStateLoadingMore(
-    super.pagination,
-    super.images,
-  );
-}
-
-class HomeStateLoadingMoreError extends HomeStateLoaded {
-  const HomeStateLoadingMoreError(
-    super.pagination,
-    super.images,
-  );
-}
-
-class HomeStateError extends HomeState {
-  const HomeStateError(super.pagination);
-
-  @override
-  List<Object?> get props => [super.props];
+  List<Object?> get props => [status, pagination, images, error];
 }

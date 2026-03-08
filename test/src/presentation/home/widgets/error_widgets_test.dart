@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nasa_apod/src/presentation/home/home_state.dart';
 import 'package:nasa_apod/src/presentation/home/widgets/custom_error.dart';
+import 'package:nasa_apod/src/presentation/home/widgets/error_panel.dart';
 import 'package:nasa_apod/src/presentation/home/widgets/loaded/load_more_error.dart';
 import 'package:nasa_apod/src/presentation/home_cubit.dart';
 
@@ -12,7 +13,10 @@ void main() {
   group('Error widgets', () {
     testWidgets('CustomError retries initial load', (tester) async {
       final cubit = TestHomeCubit(
-        initialState: HomeStateError(testPagination()),
+        initialState: HomeState(
+          status: HomeStatus.initialError,
+          pagination: testPagination(),
+        ),
       );
 
       await tester.pumpWidget(
@@ -26,6 +30,10 @@ void main() {
         ),
       );
 
+      expect(find.byType(ErrorPanel), findsOneWidget);
+      expect(find.text('Falha ao carregar a galeria'), findsOneWidget);
+      expect(find.byIcon(Icons.warning_amber_rounded), findsOneWidget);
+
       await tester.tap(find.text('Tentar novamente'));
 
       expect(cubit.getImagesCalls, 1);
@@ -33,9 +41,10 @@ void main() {
 
     testWidgets('FailedToLoadMore retries pagination request', (tester) async {
       final cubit = TestHomeCubit(
-        initialState: HomeStateLoadingMoreError(
-          testPagination(),
-          [testImage(title: 'Galaxy')],
+        initialState: HomeState(
+          status: HomeStatus.loadMoreError,
+          pagination: testPagination(),
+          images: [testImage(title: 'Galaxy')],
         ),
       );
 
@@ -49,6 +58,9 @@ void main() {
           ),
         ),
       );
+
+      expect(find.byType(ErrorPanel), findsOneWidget);
+      expect(find.text('Falha ao carregar mais itens'), findsOneWidget);
 
       await tester.tap(find.text('Tentar novamente'));
 

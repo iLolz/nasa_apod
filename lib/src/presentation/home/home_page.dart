@@ -18,11 +18,15 @@ class HomePage extends StatelessWidget {
           create: (context) => sl<HomeCubit>()..getImages(),
           child: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, HomeState state) {
-              return state.whenBuild(
-                loading: const Center(child: CircularProgressIndicator()),
-                loaded: const LoadedStateWidget(),
-                error: const CustomError(),
-              );
+              if (state.isInitialLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (state.hasInitialError) {
+                return const CustomError();
+              }
+
+              return const LoadedStateWidget();
             },
           ),
         ),

@@ -19,7 +19,10 @@ void main() {
   testWidgets('HomePage resolves cubit from GetIt and triggers initial load',
       (tester) async {
     final cubit = TestHomeCubit(
-      initialState: HomeStateLoading(testPagination()),
+      initialState: HomeState(
+        status: HomeStatus.initialLoading,
+        pagination: testPagination(),
+      ),
     );
     sl.registerFactory<HomeCubit>(() => cubit);
 

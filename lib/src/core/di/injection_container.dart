@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 
 import '../../data/data_source/images_data_source.dart';
 import '../../data/data_source/images_data_source_impl.dart';
+import '../../data/data_source/images_local_data_source.dart';
+import '../../data/data_source/images_local_data_source_impl.dart';
 import '../../data/repository/images_repository.dart';
 import '../../data/repository/images_repository_impl.dart';
 import '../../domain/usecase/apod_images_usecase.dart';
@@ -23,12 +25,15 @@ Future<void> init() async {
   sl.registerLazySingleton<ImageDataSource>(
     () => ImagesDataSourceImpl(sl()),
   );
+  sl.registerLazySingleton<ImagesLocalDataSource>(
+    ImagesLocalDataSourceImpl.new,
+  );
 
   // ═══════════════════════════════════════
   // REPOSITORIES
   // ═══════════════════════════════════════
   sl.registerLazySingleton<ImagesRepository>(
-    () => ImagesRepositoryImpl(sl()),
+    () => ImagesRepositoryImpl(sl(), sl()),
   );
 
   // ═══════════════════════════════════════

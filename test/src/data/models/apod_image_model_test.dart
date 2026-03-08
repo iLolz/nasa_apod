@@ -47,5 +47,18 @@ void main() {
       expect(model.imageUrl, 'https://example.com/thumb.jpg');
       expect(model.mediaType, 'video');
     });
+
+    test('uses empty preview url when video thumbnail is missing', () {
+      final model = ApodImageModel.fromMap({
+        'date': '2024-01-20',
+        'explanation': 'A space video.',
+        'url': 'https://youtube.com/watch?v=abc123',
+        'title': 'Launch',
+        'media_type': 'video',
+      });
+
+      expect(model.hdImageUrl, 'https://youtube.com/watch?v=abc123');
+      expect(model.imageUrl, isEmpty);
+    });
   });
 }

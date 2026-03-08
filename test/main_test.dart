@@ -28,7 +28,10 @@ void main() {
         initCalls++;
         sl.registerFactory<HomeCubit>(
           () => TestHomeCubit(
-            initialState: HomeStateLoading(testPagination()),
+            initialState: HomeState(
+              status: HomeStatus.initialLoading,
+              pagination: testPagination(),
+            ),
           ),
         );
       },
